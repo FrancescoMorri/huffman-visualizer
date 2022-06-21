@@ -3,7 +3,7 @@ from anytree.exporter import DotExporter
 import streamlit as st
 import numpy as np
 import pandas as pd
-import graphviz
+import pydot
 
 def sort_dict(unsorted_dict):
     return {k: v for k, v in sorted(unsorted_dict.items(), key=lambda item: item[1]['freq'])}
@@ -83,8 +83,9 @@ if print_out:
                 edgeattrfunc=lambda parent, child: "style=bold,label=%s" % (child.weight or 0)
     ).to_dotfile("tree.dot")
     st.subheader("Image of the Binary Tree")
-    graphviz.render('dot','png','tree.dot').replace('\\','/')
-    st.image('tree.dot.png')
+    (graph,) = pydot.graph_from_dot_file('tree.dot')
+    graph.write_png('tree.png')
+    st.image('tree.png')
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
     df = pd.DataFrame([[H,L]],columns=['entropy','encoding'])
     st.subheader("Difference from entropy:")
