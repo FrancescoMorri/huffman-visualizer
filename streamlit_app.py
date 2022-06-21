@@ -90,6 +90,6 @@ if print_out:
     st.graphviz_chart(tree_file)
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
     initial_size = sys.getsizeof(DATA)
-    df = pd.DataFrame([[H,L,initial_size,len(binary_sentence)]],columns=['entropy','encoding','original size (byte)','compressed size (byte)'])
+    df = pd.DataFrame([[H,L,initial_size,len(binary_sentence)/8]],columns=['entropy','encoding','original size (byte)','compressed size (byte)'])
     st.subheader("Difference from entropy:")
     st.dataframe(df)
