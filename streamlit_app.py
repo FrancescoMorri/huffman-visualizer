@@ -31,7 +31,7 @@ def compute_entropy(totlen, text_dict, encoding_dict):
     return entropy, huffman_weight
 
 st.set_page_config(page_title="Huffman Encoding", page_icon="random",
-                 layout="centered", initial_sidebar_state="auto", menu_items=None)
+                 layout="wide", initial_sidebar_state="auto", menu_items=None)
 
 st.title("Huffman Encoding Generator")
 st.caption("The app will generate the encoding, produce an image of the binary tree used and compute the Shannon entropy of the original sentence, in order to check how close the encoding is to optimality.")
@@ -90,6 +90,6 @@ if print_out:
     st.graphviz_chart(tree_file)
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
     initial_size = sys.getsizeof(DATA)
-    df = pd.DataFrame([[H,L,initial_size,len(binary_sentence)]],columns=['entropy','encoding','original size','compressed size'])
+    df = pd.DataFrame([[H,L,initial_size,len(binary_sentence)]],columns=['entropy','encoding','original size (byte)','compressed size (byte)'])
     st.subheader("Difference from entropy:")
     st.dataframe(df)
