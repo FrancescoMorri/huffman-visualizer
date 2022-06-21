@@ -60,7 +60,7 @@ with st.form("B"):
         sorted_dict[c2]['node'].weight = '1'
         n_t = n1+n2
         c_t = c1+c2
-        sorted_dict[c_t] = {'freq':n_t, 'node':Node(c_t, children=[sorted_dict[c1]['node'], sorted_dict[c2]['node']], char=c_t)}
+        sorted_dict[c_t] = {'freq':n_t, 'node':Node(c_t, children=[sorted_dict[c1]['node'], sorted_dict[c2]['node']], char=c_t, freq=n_t)}
         sorted_dict.pop(c1, None)
         sorted_dict.pop(c2, None)
         i = len(sorted_dict.keys())
