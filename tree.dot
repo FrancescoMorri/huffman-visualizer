@@ -1,0 +1,15 @@
+digraph tree {
+    "heol" [shape=box];
+    "he" [shape=box];
+    "h" [shape=box];
+    "e" [shape=box];
+    "ol" [shape=box];
+    "o" [shape=box];
+    "l" [shape=box];
+    "heol" -> "he" [style=bold,label=0];
+    "heol" -> "ol" [style=bold,label=1];
+    "he" -> "h" [style=bold,label=0];
+    "he" -> "e" [style=bold,label=1];
+    "ol" -> "o" [style=bold,label=0];
+    "ol" -> "l" [style=bold,label=1];
+}
