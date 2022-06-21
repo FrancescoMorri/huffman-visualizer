@@ -3,7 +3,6 @@ from anytree.exporter import DotExporter
 import streamlit as st
 import numpy as np
 import pandas as pd
-import pydot
 
 def sort_dict(unsorted_dict):
     return {k: v for k, v in sorted(unsorted_dict.items(), key=lambda item: item[1]['freq'])}
@@ -82,10 +81,46 @@ if print_out:
                 nodeattrfunc=lambda node: "shape=box",
                 edgeattrfunc=lambda parent, child: "style=bold,label=%s" % (child.weight or 0)
     ).to_dotfile("tree.dot")
-    st.subheader("Image of the Binary Tree")
-    (graph,) = pydot.graph_from_dot_file('tree.dot')
-    graph.write_png('tree.png')
-    st.image('tree.png')
+    st.graphviz_chart('''digraph tree {
+    "ngo hwyudi" [shape=box];
+    "ngo" [shape=box];
+    "ng" [shape=box];
+    "n" [shape=box];
+    "g" [shape=box];
+    "o" [shape=box];
+    " hwyudi" [shape=box];
+    " hw" [shape=box];
+    " " [shape=box];
+    "hw" [shape=box];
+    "h" [shape=box];
+    "w" [shape=box];
+    "yudi" [shape=box];
+    "yu" [shape=box];
+    "y" [shape=box];
+    "u" [shape=box];
+    "di" [shape=box];
+    "d" [shape=box];
+    "i" [shape=box];
+    "ngo hwyudi" -> "ngo" [style=bold,label=0];
+    "ngo hwyudi" -> " hwyudi" [style=bold,label=1];
+    "ngo" -> "ng" [style=bold,label=0];
+    "ngo" -> "o" [style=bold,label=1];
+    "ng" -> "n" [style=bold,label=0];
+    "ng" -> "g" [style=bold,label=1];
+    " hwyudi" -> " hw" [style=bold,label=0];
+    " hwyudi" -> "yudi" [style=bold,label=1];
+    " hw" -> " " [style=bold,label=0];
+    " hw" -> "hw" [style=bold,label=1];
+    "hw" -> "h" [style=bold,label=0];
+    "hw" -> "w" [style=bold,label=1];
+    "yudi" -> "yu" [style=bold,label=0];
+    "yudi" -> "di" [style=bold,label=1];
+    "yu" -> "y" [style=bold,label=0];
+    "yu" -> "u" [style=bold,label=1];
+    "di" -> "d" [style=bold,label=0];
+    "di" -> "i" [style=bold,label=1];
+}
+''')
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
     df = pd.DataFrame([[H,L]],columns=['entropy','encoding'])
     st.subheader("Difference from entropy:")
