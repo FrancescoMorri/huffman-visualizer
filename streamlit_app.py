@@ -78,12 +78,13 @@ if print_out:
     st.subheader("Binary Encoding:")
     st.text(encode_sentence(DATA, final_dict))
     DotExporter(full_tree,
-                nodenamefunc=lambda node: "%s, %s"%(node.name,node.freq),
+                nodenamefunc=lambda node: "Char:%s, Freq:%s"%(node.name,node.freq),
                 nodeattrfunc=lambda node: "shape=box",
                 edgeattrfunc=lambda parent, child: "style=bold,label=%s" % (child.weight or 0)
     ).to_dotfile("tree.dot")
     with open("tree.dot", 'r') as f:
         tree_file = f.read()
+    st.subheader("Tree Graph:")
     st.graphviz_chart(tree_file)
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
     df = pd.DataFrame([[H,L]],columns=['entropy','encoding'])
