@@ -44,8 +44,9 @@ with st.form("B"):
     for d in DATA:
         if d in pre_dict.keys():
             pre_dict[d]['freq'] += 1
+            pre_dict[d]['node'].freq += 1
         else:
-            pre_dict[d] = {'freq':1, 'node':Node(d, char=d, weight=None)}
+            pre_dict[d] = {'freq':1, 'node':Node(d, char=d, weight=None, freq=1)}
 
     sorted_dict = sort_dict(pre_dict)
     i = len(sorted_dict.keys())
@@ -77,7 +78,7 @@ if print_out:
     st.subheader("Binary Encoding:")
     st.text(encode_sentence(DATA, final_dict))
     DotExporter(full_tree,
-                nodenamefunc=lambda node: node.name,
+                nodenamefunc=lambda node: "%s, %s"%(node.name,node.freq),
                 nodeattrfunc=lambda node: "shape=box",
                 edgeattrfunc=lambda parent, child: "style=bold,label=%s" % (child.weight or 0)
     ).to_dotfile("tree.dot")
