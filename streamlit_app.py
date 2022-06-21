@@ -3,6 +3,7 @@ from anytree.exporter import DotExporter
 import streamlit as st
 import numpy as np
 import pandas as pd
+import sys
 
 def sort_dict(unsorted_dict):
     return {k: v for k, v in sorted(unsorted_dict.items(), key=lambda item: item[1]['freq'])}
@@ -76,7 +77,8 @@ if print_out:
     encoding = ""
     get_children(full_tree, encoding, final_dict)
     st.subheader("Binary Encoding:")
-    st.text(encode_sentence(DATA, final_dict))
+    binary_sentence = encode_sentence(DATA, final_dict)
+    st.text(binary_sentence)
     DotExporter(full_tree,
                 nodenamefunc=lambda node: "Char:%s, Freq:%s"%(node.name,node.freq),
                 nodeattrfunc=lambda node: "shape=box",
@@ -87,6 +89,7 @@ if print_out:
     st.subheader("Tree Graph:")
     st.graphviz_chart(tree_file)
     H, L = compute_entropy(len(DATA), pre_dict, final_dict)
-    df = pd.DataFrame([[H,L]],columns=['entropy','encoding'])
+    initial_size = sys.getsizeof(DATA)
+    df = pd.DataFrame([[H,L,initial_size,len(binary_sentence)]],columns=['entropy','encoding','original size','compressed size'])
     st.subheader("Difference from entropy:")
     st.dataframe(df)
